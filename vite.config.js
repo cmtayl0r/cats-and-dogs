@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import legacy from '@vitejs/plugin-legacy';
 
 export default defineConfig({
     // Base public path when served in production.
@@ -13,5 +14,8 @@ export default defineConfig({
     // Plugins configuration.
     plugins: [
         // You can add Vite plugins here if needed.
+        legacy({
+            targets: ['defaults', 'not IE 11'],
+        }),
     ],
 });
