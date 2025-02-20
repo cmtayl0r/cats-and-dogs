@@ -1,0 +1,354 @@
+/*
+- The Stack / Vertical rhythm of items in a box
+- The Box / Basic box padding
+- The Center / Center elements horizontally in a box
+- The Sidebar / Flex based responsive sidebar
+- The Cluster / Groups of similar elements
+- The Switcher / Easy switch between horizontal and vertical layouts
+- The Cover / Hero area layout
+- The Grid / Simple layout of grid items
+- The Frame / Image aspect ratio control
+- The Reel / Overflow containers for horizontal scrolling
+- The Imposter / Absolute positioned element
+- The Icon /
+*/
+
+/* 
+--------------------------------------------------------------------------------
+THE STACK
+--------------------------------------------------------------------------------
+*/
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.stack > * {
+  margin-block: 0;
+}
+.stack > * + * {
+  margin-block-start: var(--sp-base);
+}
+.stack-large > * + * {
+  margin-block-start: var(--sp-24);
+}
+.stack-small > * + * {
+  margin-block-start: var(--sp-8);
+}
+/* flexbox allows to separate items vertically (i.e. Card) */
+/*
+.stack > :nth-child(2) {
+    margin-block-end: auto;
+}
+*/
+/* exception above and below */
+/* or just above*/
+.stack-exception,
+.stack-exception > * {
+  margin-block-start: var(--sp-48);
+}
+.stack:only-child {
+  /* ↓ `height` in horizontal-tb writing mode */
+  block-size: 100%;
+}
+
+/* 
+--------------------------------------------------------------------------------
+THE BOX
+--------------------------------------------------------------------------------
+*/
+
+.box {
+  padding: var(--sp-base);
+  color: var(--color-black);
+  background-color: var(--color-white);
+  outline: 0.125rem solid transparent;
+  outline-offset: -0.125rem;
+}
+
+.box * {
+  color: inherit;
+}
+.box.invert {
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
+/* 
+--------------------------------------------------------------------------------
+THE CENTER
+--------------------------------------------------------------------------------
+*/
+.center {
+  box-sizing: content-box;
+  max-inline-size: 60ch;
+  margin-inline: auto;
+}
+/* 
+--------------------------------------------------------------------------------
+THE SIDEBAR
+--------------------------------------------------------------------------------
+*/
+.with-sidebar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-base);
+}
+
+/* 
+- Swap with-sidebar to :last-child if right column
+- flex-basis on :first-child to set sidebar fixed width
+- flex-grow: 999 takes all avilable space and squashes down the sidebar to ideal size
+*/
+
+.with-sidebar > :first-child {
+  /* ↓ The width when the sidebar _is_ a sidebar */
+  flex-basis: 20em; /* Set if sidebar fixed width */
+  flex-grow: 1;
+}
+
+.with-sidebar > :last-child {
+  /* ↓ Grow from nothing */
+  flex-basis: 0;
+  flex-grow: 999;
+  /* ↓ Wrap when the elements are of equal width (50%, or another %) */
+  min-inline-size: 60%; /* Determines when wrapping happens */
+}
+/* 
+--------------------------------------------------------------------------------
+THE CLUSTER
+--------------------------------------------------------------------------------
+*/
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-base, 1rem);
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.cluster.cluster-space {
+  justify-content: space-between;
+}
+
+/* 
+--------------------------------------------------------------------------------
+THE SWITCHER
+--------------------------------------------------------------------------------
+*/
+
+.switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-base);
+}
+
+.switcher > * {
+  flex-grow: 1;
+  /* ↓ 40rem is the threshold width to trigger the switch */
+  flex-basis: calc((40rem - 100%) * 999);
+}
+
+.switcher > :nth-last-child(n + 5),
+.switcher > :nth-last-child(n + 5) ~ * {
+  flex-basis: 100%;
+}
+
+/* 
+--------------------------------------------------------------------------------
+THE COVER
+--------------------------------------------------------------------------------
+*/
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100vh;
+  padding: var(--sp-base);
+}
+
+.cover > * {
+  margin-block: var(--sp-base);
+}
+
+.cover > :first-child:not(h1) {
+  margin-block-start: 0;
+}
+
+.cover > :last-child:not(h1) {
+  margin-block-end: 0;
+}
+
+.cover > h1 {
+  margin-block: auto;
+  text-align: center !important; /* Remove as necessary */
+}
+
+/* 
+--------------------------------------------------------------------------------
+THE GRID
+--------------------------------------------------------------------------------
+*/
+
+.grid {
+  display: grid;
+  grid-gap: var(--sp-base);
+}
+
+@supports (width: min(250px, 100%)) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+  }
+}
+
+/* 
+--------------------------------------------------------------------------------
+THE FRAME
+--------------------------------------------------------------------------------
+*/
+
+.frame {
+  --n: 16;
+  --d: 9;
+  aspect-ratio: var(--n) / var(--d);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.frame > img,
+.frame > video {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+.frame.frame--4-3 {
+  --n: 4;
+  --d: 3;
+  aspect-ratio: var(--n) / var(--d);
+}
+.frame.frame--3-2 {
+  --n: 3;
+  --d: 2;
+  aspect-ratio: var(--n) / var(--d);
+}
+.frame.frame--1-1 {
+  --n: 1;
+  --d: 1;
+  aspect-ratio: var(--n) / var(--d);
+}
+
+/* 
+--------------------------------------------------------------------------------
+THE REEL
+--------------------------------------------------------------------------------
+*/
+/* q: how do create a shadow affordance for my reel container? */
+
+.reel {
+  display: flex;
+  /* ↓ We only want horizontal scrolling */
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* ↓ First value: thumb; second value: track */
+  scrollbar-color: var(--color-gray-light) var(--color-gray-dark);
+  padding: var(--sp-base);
+
+  /* Optional height, usually for images */
+  block-size: 50vh;
+}
+
+.reel::-webkit-scrollbar {
+  block-size: 1rem;
+}
+
+.reel::-webkit-scrollbar-track {
+  background-color: var(--color-gray-dark);
+}
+
+.reel::-webkit-scrollbar-thumb {
+  background-color: var(--color-gray-dark);
+  background-image: linear-gradient(
+    var(--color-gray-dark) 0,
+    var(--color-gray-dark) 0.25rem,
+    var(--color-gray-light) 0.25rem,
+    var(--color-gray-light) 0.75rem,
+    var(--color-gray-dark) 0.75rem
+  );
+}
+
+.reel > * {
+  flex: 0 0 auto;
+}
+
+.reel > img {
+  block-size: 100%;
+  flex-basis: auto;
+  width: auto;
+}
+
+.reel > * + * {
+  margin-inline-start: var(--sp-base);
+}
+
+.reel.overflowing {
+  padding-block-end: var(--sp-base);
+}
+
+/* 
+--------------------------------------------------------------------------------
+THE IMPOSTER
+--------------------------------------------------------------------------------
+*/
+
+.imposter {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.imposter.contain {
+  --margin: 0px;
+  overflow: auto;
+  max-inline-size: calc(100% - (var(--margin) * 2));
+  max-block-size: calc(100% - (var(--margin) * 2));
+}
+
+/* 
+--------------------------------------------------------------------------------
+THE ICON
+--------------------------------------------------------------------------------
+*/
+
+.icon {
+  width: 1em;
+  width: 1cap;
+  height: 1em;
+  height: 1cap;
+  fill: currentColor; /* Icon color matches the text color */
+  font-weight: var(
+    --fw-regular
+  ); /* Reset font weight for 3rd party Icons using <i> */
+}
+
+.with-icon {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.with-icon .icon {
+  margin-inline-end: var(--sp-20);
+}
+
+.icon-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.125em;
+
+  & i.icon {
+    text-decoration: none !important;
+  }
+}

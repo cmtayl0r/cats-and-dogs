@@ -1,0 +1,48 @@
+/* 
+--------------------------------------------------------------------------------
+ Automatic Theme (User Preference).--------------------------------------------------------------------------------
+*/
+:root {
+  --base: var(--color-white);
+  --text: var(--color-black);
+
+  /* Accessibility */
+  --focus-ring: #ffd700;
+
+  /* Transitions */
+  --theme-transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --base: var(--color-black);
+    --text: var(--color-white);
+  }
+}
+
+html {
+  /* 
+    The browser native UI will also adapt to the user's preferences.
+    This is a fallback for the prefers-color-scheme media query.
+  */
+  color-scheme: dark light;
+  transition: var(--theme-transition);
+}
+
+/* 
+--------------------------------------------------------------------------------
+ Manual theme switching.
+--------------------------------------------------------------------------------
+*/
+
+[data-theme="light"] {
+  color-scheme: light;
+  --base: var(--color-white);
+  --text: var(--color-black);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --base: var(--color-black);
+  --text: var(--color-white);
+}

@@ -1,0 +1,72 @@
+/* 
+--------------------------------------------------------------------------------
+ACCESSIBILITY
+--------------------------------------------------------------------------------
+*/
+
+/* Focus ring for keyboard navigation */
+*:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 0.25rem;
+  border-radius: 0.125rem;
+}
+
+/* Remove focus outline for mouse users */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Screen reader-only text, visually hidden but still accessible */
+span[class~="sr-only"] {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  position: absolute;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0;
+  margin: -1px;
+}
+
+/* Remove all animations and transitions for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visually hide elements while keeping them accessible to screen readers */
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+/* Prevent text selection */
+.no-user-select {
+  user-select: none;
+}
+
+/* Disable pointer interactions */
+.pointer-none {
+  pointer-events: none;
+}
+
+/* Completely hide elements from view and layout */
+.hidden {
+  display: none;
+  visibility: hidden;
+}

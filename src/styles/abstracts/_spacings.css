@@ -1,0 +1,49 @@
+:root {
+  /* Static Spacing system */
+  --sp-4: calc(var(--sp-base) * 0.25); /* 4px */
+  --sp-8: calc(var(--sp-base) * 0.5); /* 8px */
+  --sp-12: calc(var(--sp-base) * 0.75); /* 12px */
+  --sp-base: 1rem; /* 16px */
+  --sp-20: calc(var(--sp-base) * 1.25); /* 20px */
+  --sp-24: calc(var(--sp-base) * 1.5); /* 24px */
+  --sp-32: calc(var(--sp-base) * 2); /* 32px */
+  --sp-40: calc(var(--sp-base) * 2.5); /* 40px */
+  --sp-48: calc(var(--sp-base) * 3); /* 48px */
+  --sp-56: calc(var(--sp-base) * 3.5); /* 56px */
+  --sp-64: calc(var(--sp-base) * 4); /* 64px */
+  --sp-72: calc(var(--sp-base) * 4.5); /* 72px */
+  --sp-80: calc(var(--sp-base) * 5); /* 80px */
+  --sp-96: calc(var(--sp-base) * 6); /* 96px */
+
+  /* Dynamic Spacing system */
+  /* Min viewport: 320 > Max viewport: 1240 */
+  --sp-dyn--3: clamp(0.25rem, 0.2283rem + 0.1087vi, 0.3125rem); /* 4 > 5 */
+  --sp-dyn--2: clamp(0.5rem, 0.4565rem + 0.2174vi, 0.625rem); /* 8 > 10 */
+  --sp-dyn--1: clamp(0.75rem, 0.6848rem + 0.3261vi, 0.9375rem); /* 12 > 15 */
+  --sp-dyn-base: clamp(1rem, 0.913rem + 0.4348vi, 1.25rem); /* 16 > 20 */
+  --sp-dyn-1: clamp(1.5rem, 1.3696rem + 0.6522vi, 1.875rem); /* 24 > 30 */
+  --sp-dyn-2: clamp(2rem, 1.8261rem + 0.8696vi, 2.5rem); /* 32 > 40 */
+  --sp-dyn-3: clamp(3rem, 2.7391rem + 1.3043vi, 3.75rem); /* 48 > 60 */
+  --sp-dyn-4: clamp(4rem, 3.6522rem + 1.7391vi, 5rem); /* 64 > 80 */
+  --sp-dyn-5: clamp(6rem, 5.4783rem + 2.6087vi, 7.5rem); /* 96 > 120 */
+}
+
+/* 
+--------------------------------------------------------------------------------
+VERTICAL RHYTHM
+--------------------------------------------------------------------------------
+*/
+
+.flow > * + * {
+  /* 
+    - setting a variable that can adjusted on elements elsewhere
+    - e.g. on a h2 I could set:
+      h2 {
+        --flow-space:2em; 
+      }
+    - 1em is the fallback and used by everything else
+    - em used to give variable spacing based on font size
+    - preferable to same spacing for h1 and p for example
+    */
+  margin-block-start: var(--flow-space, 1em);
+}

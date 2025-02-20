@@ -1,0 +1,142 @@
+:root {
+  /* Font faces */
+  --ff-base: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  /* Font weights */
+  --fw-bold: 700;
+  --fw-semiBold: 600;
+  --fw-regular: 400;
+  --fw-light: 300;
+
+  /* Line Height */
+  /* 
+    Add accessible line-height for paragraph content
+    https://www.w3.org/WAI/WCAG21/Understanding/text-spacing.html 
+    */
+  --lh-base: 1.6;
+  --lh-tight: clamp(1.2, 0.7vw + 1.3, 1.5);
+  --lh-relaxed: clamp(1.6, 1vw + 1.5, 2);
+
+  /* 
+    Fluid typography system
+    https://www.fluid-type-scale.com/
+    - Line height (line spacing) to at least 1.5 times the font size;
+    - Spacing following paragraphs to at least 2 times the font size;
+    */
+  --fs-sm: clamp(0.75rem, 0.31vw + 0.69rem, 0.94rem);
+  --fs-base: clamp(1rem, 0.42vw + 0.92rem, 1.25rem);
+  --fs-md: clamp(1.33rem, 0.56vw + 1.22rem, 1.67rem);
+  --fs-lg: clamp(1.78rem, 0.74vw + 1.63rem, 2.22rem);
+  --fs-xl: clamp(2.37rem, 0.99vw + 2.17rem, 2.96rem);
+  --fs-xxl: clamp(3.16rem, 1.32vw + 2.89rem, 3.95rem);
+  --fs-xxxl: clamp(4.21rem, 1.75vw + 3.86rem, 5.26rem);
+}
+
+/* 
+--------------------------------------------------------------------------------
+TYPOGRAPHY 
+--------------------------------------------------------------------------------
+*/
+small,
+.text-small {
+  font-size: var(--fs-sm);
+}
+p {
+  font-size: var(--fs-base);
+  max-width: 65ch; /* Improves readability */
+  font-weight: var(--fw-regular);
+}
+h5 {
+  font-size: var(--fs-md);
+  /* line-height: var(--lh-md); */
+}
+h4 {
+  font-size: var(--fs-lg);
+  /* line-height: var(--lh-lg); */
+}
+h3 {
+  font-size: var(--fs-xl);
+  /* line-height: var(--lh-xl); */
+}
+h2 {
+  font-size: var(--fs-xxl);
+  /* line-height: var(--lh-xxl); */
+}
+h1 {
+  font-size: var(--fs-xxxl);
+  /* line-height: var(--lh-xxxl); */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  margin: 3rem 0 1.38rem;
+}
+
+/* 
+--------------------------------------------------------------------------------
+WEIGHTS
+--------------------------------------------------------------------------------
+*/
+
+.text-light {
+  font-weight: var(--fw-light);
+}
+
+/* 
+--------------------------------------------------------------------------------
+LINKS
+--------------------------------------------------------------------------------
+*/
+
+a {
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.2em;
+}
+a:hover {
+  text-decoration: none;
+}
+
+/* 
+--------------------------------------------------------------------------------
+LISTS
+--------------------------------------------------------------------------------
+*/
+
+ul {
+  list-style-position: inside;
+  padding-left: 1rem;
+}
+ul li::marker,
+ol li::marker {
+  color: gray;
+}
+
+/* 
+--------------------------------------------------------------------------------
+CODE
+--------------------------------------------------------------------------------
+*/
+
+code {
+  font-family: monospace;
+  font-size: inherit;
+}
+
+p > code,
+li > code,
+dd > code,
+td > code {
+  background: white;
+  word-wrap: break-word;
+  box-decoration-break: clone;
+  padding: 0.1em 0.3em 0.2em;
+  border-radius: 0.2em;
+}

@@ -1,0 +1,29 @@
+:root {
+  font-family: var(--ff-base);
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  font-weight: var(--fw-regular);
+  color: var(--text);
+  background-color: var(--base);
+
+  /* 
+    When clicking an anchor link (#section)
+    the browser scrolls too far up
+    Adding scroll-padding-top prevents content from being cut off.
+  */
+  scroll-padding-top: 4rem; /* Adjust for fixed headers */
+}
+
+body {
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+
+  /* 
+    To sort horizontal scroll bar issue 
+    when using full-width trick on image and callout
+    vw unit counts under the vertical scrollbar
+  */
+  overflow-x: hidden;
+}
