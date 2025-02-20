@@ -21,5 +21,8 @@ A responsive Weather App using Weather API Data to display several features such
 ## Todo list
 
 - [ ] Implement Framer animations
+- [ ] Refactor CSS into variables and separate files
+- [ ] Utilise responsive debounce search dropdown for location search
+- [ ] Save multiple locations
 
 [1]: https://openweathermap.org/
