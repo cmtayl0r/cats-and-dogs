@@ -12,7 +12,9 @@ A responsive Weather App using Weather API Data to display several features such
 - React
 - Vite for build tool
 - React Router for Routing x and y
-- Axios for API calls
+- Create a "useFetchData" hook to handle axios API calls to weather API
+  - Using Try/Catch to gracefully set loading and errors states
+  - Exported Error & Loading state back to component to conditionally display components in case of scenario
 - Context API and useReducer for Global State
 - [Open Weather][1] for API data
 
