@@ -11,10 +11,7 @@ import { MapPinned, Search, Wind, Droplet } from "lucide-react";
 import styles from "./WeatherApp.module.css";
 
 // Hooks
-import useFetchData from "../../hooks/useFetchData";
 import useFetch from "../../hooks/useFetch";
-
-//'api.openweathermap.org/geo/1.0/direct?q=${"Berlin"}&limit=1&appid=53901fa0797c3c9403358b2d02c1f9c8'
 
 function WeatherApp() {
   const [query, setQuery] = useState("");
@@ -22,11 +19,19 @@ function WeatherApp() {
   // TODO: Debounce hook for debouncedQuery
 
   const API_KEY = "53901fa0797c3c9403358b2d02c1f9c8";
-  const todaysDate = new Date().toLocaleDateString();
+  const todaysDate = new Date().toLocaleDateString("en-GB");
   const { data, isLoading, error } = useFetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=Berlin&appid=${API_KEY}`
+    `https://api.openweathermap.org/data/2.5/weather?q=${query}&units=Metric&appid=${API_KEY}`
   );
-  console.log(data);
+
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      setQuery(e.target.value);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -38,7 +43,13 @@ function WeatherApp() {
             <span className={styles["search__location"]}>{data?.name}</span>
           </div>
           <div className={styles["search__input"]}>
-            <input type="text" placeholder="Enter location ..." />
+            <input
+              type="text"
+              placeholder="Enter location ..."
+              value={query}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+            />
             <Search className={styles["icon"]} />
           </div>
         </div>
@@ -49,31 +60,37 @@ function WeatherApp() {
         {/* Display any errors */}
         {error && <p className={styles["not-found"]}>Error: {error} </p>}
         {/* Weather Info */}
-        <div className={styles["weather__info"]}>
-          <img src={sunny} alt="sunny" />
-          <div className={styles["weather__type"]}>Clear</div>
-          <span className={styles["weather__temp"]}>28&deg;</span>
-        </div>
-        <div className={styles["weather__date"]}>
-          <p>{todaysDate}</p>
-        </div>
-        {/* Weather Data */}
-        <div className={styles["weather__data"]}>
-          <div className={styles["weather__data-item"]}>
-            <span className={styles["weather__data-name"]}>Wind</span>
-            <Wind className={styles["weather__data-icon"]} />
-            <span className={styles["weather__data-value"]}>
-              {/* {data.wind.speed} km/h */}
-            </span>
-          </div>
-          <div className={styles["weather__data-item"]}>
-            <span className={styles["weather__data-name"]}>Humidity</span>
-            <Droplet className={styles["weather__data-icon"]} />
-            <span className={styles["weather__data-value"]}>
-              {/* {data.main.humidity}% */}
-            </span>
-          </div>
-        </div>
+        {data && ( // Display weather data if it exists)
+          <>
+            <div className={styles["weather__info"]}>
+              <img src={sunny} alt="sunny" />
+              <div className={styles["weather__type"]}>Clear</div>
+              <span className={styles["weather__temp"]}>
+                {Number(data?.main?.temp).toFixed(0)}&deg;
+              </span>
+            </div>
+            <div className={styles["weather__date"]}>
+              <p>{todaysDate}</p>
+            </div>
+            <div className={styles["weather__data"]}>
+              <div className={styles["weather__data-item"]}>
+                <span className={styles["weather__data-name"]}>Wind</span>
+                <Wind className={styles["weather__data-icon"]} />
+                <span className={styles["weather__data-value"]}>
+                  {data?.wind.speed} km/h
+                </span>
+              </div>
+              <div className={styles["weather__data-item"]}>
+                <span className={styles["weather__data-name"]}>Humidity</span>
+                <Droplet className={styles["weather__data-icon"]} />
+                <span className={styles["weather__data-value"]}>
+                  {data?.main.humidity}%
+                </span>
+              </div>
+            </div>
+          </>
+        )}
+        ;
       </div>
     </div>
   );

@@ -20,8 +20,13 @@ A responsive Weather App using Weather API Data to display several features such
 
 ## What I learnt
 
+- Using Thunder Client extension to review and learn the API data from Open Weather
+- Using Hooks (useFetch and useDebounce) to create a flexible location search input
+
 ## Todo list
 
+- [ ] Default view on load is current location (lang, long)
+- [ ] Action to get current location (lang, long)
 - [ ] Implement Framer animations
 - [ ] Refactor CSS into variables and separate files
 - [ ] Utilise responsive debounce search dropdown for location search
