@@ -167,3 +167,21 @@ Weather Data
   font-size: 2rem;
   color: #2f2e57;
 }
+
+/* 
+------------------------------------------------------
+Weather Data
+------------------------------------------------------
+*/
+
+.loader {
+  width: 5rem;
+  margin-top: 10rem;
+}
+
+.not-found {
+  font-size: 3rem;
+  color: #484569;
+  margin-top: 5rem;
+  text-shadow: -0.3rem 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}

@@ -12,8 +12,8 @@ import styles from "./WeatherApp.module.css";
 
 // Hooks
 import useFetchData from "../../hooks/useFetchData";
+import useFetch from "../../hooks/useFetch";
 
-// 53901fa0797c3c9403358b2d02c1f9c8
 //'api.openweathermap.org/geo/1.0/direct?q=${"Berlin"}&limit=1&appid=53901fa0797c3c9403358b2d02c1f9c8'
 
 function WeatherApp() {
@@ -22,10 +22,10 @@ function WeatherApp() {
   // TODO: Debounce hook for debouncedQuery
 
   const API_KEY = "53901fa0797c3c9403358b2d02c1f9c8";
-  const { data, isLoading, error } = useFetchData(
-    "https://api.openweathermap.org/data/2.5/weather?q=Berlin&appid=${API_KEY}"
+  const todaysDate = new Date().toLocaleDateString();
+  const { data, isLoading, error } = useFetch(
+    `https://api.openweathermap.org/data/2.5/weather?q=Berlin&appid=${API_KEY}`
   );
-
   console.log(data);
 
   return (
@@ -35,13 +35,19 @@ function WeatherApp() {
         <div className={styles["search"]}>
           <div className={styles["search__top"]}>
             <MapPinned size={20} className={styles["icon"]} />
-            <span className={styles["search__location"]}>{data.name}</span>
+            <span className={styles["search__location"]}>{data?.name}</span>
           </div>
           <div className={styles["search__input"]}>
             <input type="text" placeholder="Enter location ..." />
             <Search className={styles["icon"]} />
           </div>
         </div>
+        {/* Display loading state */}
+        {isLoading && (
+          <img src={loadingGif} className={styles["loading"]} alt="loading" />
+        )}
+        {/* Display any errors */}
+        {error && <p className={styles["not-found"]}>Error: {error} </p>}
         {/* Weather Info */}
         <div className={styles["weather__info"]}>
           <img src={sunny} alt="sunny" />
@@ -49,19 +55,23 @@ function WeatherApp() {
           <span className={styles["weather__temp"]}>28&deg;</span>
         </div>
         <div className={styles["weather__date"]}>
-          <p>Fri, 30 Feb</p>
+          <p>{todaysDate}</p>
         </div>
         {/* Weather Data */}
         <div className={styles["weather__data"]}>
           <div className={styles["weather__data-item"]}>
             <span className={styles["weather__data-name"]}>Wind</span>
             <Wind className={styles["weather__data-icon"]} />
-            <span className={styles["weather__data-value"]}>5 km/h</span>
+            <span className={styles["weather__data-value"]}>
+              {/* {data.wind.speed} km/h */}
+            </span>
           </div>
           <div className={styles["weather__data-item"]}>
             <span className={styles["weather__data-name"]}>Humidity</span>
             <Droplet className={styles["weather__data-icon"]} />
-            <span className={styles["weather__data-value"]}>60%</span>
+            <span className={styles["weather__data-value"]}>
+              {/* {data.main.humidity}% */}
+            </span>
           </div>
         </div>
       </div>

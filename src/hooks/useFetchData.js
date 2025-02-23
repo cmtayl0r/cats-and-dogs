@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios"; // Import axios for HTTP requests
 
-function useFetchData(url) {
+function useFetchData(url, options = {}) {
   // 01 - STATE
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -16,27 +16,34 @@ function useFetchData(url) {
 
     async function fetchData() {
       try {
-        setIsLoading(true); // Set loading state to true before making the request
-        setError(""); // Clear any previous errors
-
+        // Set loading state to true before making the request
+        setIsLoading(true);
+        // Clear any previous errors
+        setError("");
+        // Make a GET request to the URL
         const response = await axios.get(url, {
           cancelToken: source.token, // Attach the cancel token to the request
         });
 
-        if (response.data.Response === "False") {
-          // If the API response indicates a failure, throw a custom error
+        // If the response doesn't have data or has an error message, throw an error
+        if (!response.data || response.data.Response === "False") {
           throw new Error("🤷 Results not found!");
         }
-
-        setData(response.data); // Set the fetched data to state
-        setError(""); // Clear any errors if the data fetch was successful
+        // Set the fetched data to state
+        setData(response.data);
+        // Clear any previous errors
+        setError("");
       } catch (error) {
         if (axios.isCancel(error)) {
           // If the error is due to the request being canceled, handle it separately
           console.log("Request canceled", error.message);
         } else {
-          // Handle any other errors that occur
-          setError(error.response ? error.response.data.error : error.message);
+          // Handle other errors by setting the error state
+          setError(
+            error.response?.data?.error ||
+              error.message ||
+              "An unknown error occurred."
+          );
         }
       } finally {
         // Always set loading to false once the request is complete
