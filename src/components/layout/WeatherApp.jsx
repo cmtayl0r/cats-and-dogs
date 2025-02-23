@@ -19,10 +19,16 @@ function WeatherApp() {
   // TODO: Debounce hook for debouncedQuery
 
   const API_KEY = "53901fa0797c3c9403358b2d02c1f9c8";
-  const todaysDate = new Date().toLocaleDateString("en-GB");
   const { data, isLoading, error } = useFetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${query}&units=Metric&appid=${API_KEY}`
   );
+  const dateOptions = {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  };
+  const todaysDate = new Date().toLocaleDateString("en-GB", dateOptions);
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
