@@ -9,6 +9,7 @@ import { MapPinned, Search, Wind, Droplet } from "lucide-react";
 
 // Services
 import { API_SEARCH } from "../../services/apiConfig";
+import { API_LOCATION_ID } from "../../services/apiConfig";
 
 // Local scoped styles
 import styles from "./WeatherApp.module.css";
@@ -19,9 +20,26 @@ import useDebounce from "../../hooks/useDebounce";
 
 function WeatherApp() {
   const [query, setQuery] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedLocationId, setSelectedLocationId] = useState(null);
   const debouncedQuery = useDebounce(query, 500);
   const { data, isLoading, error } = useFetch(API_SEARCH, debouncedQuery);
+
+  const {
+    data: locationData,
+    isLoading: locationIsLoading,
+    error: locationError,
+  } = useFetch(API_LOCATION_ID, selectedLocationId);
+
+  // const {
+  //   name,
+  //   main: { temp },
+  //   sys: { country },
+  //   wind: { speed },
+  //   weather: [{ main }],
+  //   weather: [{ description }],
+  // } = locationData;
+
+  console.log(locationData);
 
   const dateOptions = {
     weekday: "short",
@@ -41,6 +59,15 @@ function WeatherApp() {
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
+  };
+
+  const handleSelectLocation = (locationId) => {
+    // setSelectedLocationId(locationId);
+    // Toggle the selected location ID when clicked again
+    setSelectedLocationId((selectedId) =>
+      selectedId === locationId ? null : locationId
+    );
+    console.log(locationId);
   };
 
   console.log(data);
@@ -66,7 +93,7 @@ function WeatherApp() {
                 <li key={city.id}>
                   <a
                     className="dropdown-item"
-                    // onClick={() => onSelect(city)}
+                    onClick={() => handleSelectLocation(city.id)}
                   >
                     {countryCodeToEmoji(city.sys.country)}
                     {city.name}, {city.sys.country}, {city.main.temp}°C
@@ -77,27 +104,31 @@ function WeatherApp() {
           </div>
         </div>
         {/* Display loading state */}
-        {isLoading && (
+        {locationIsLoading && (
           <img src={loadingGif} className={styles["loading"]} alt="loading" />
         )}
         {/* Display any errors */}
-        {error && <p className={styles["not-found"]}>Error: {error} </p>}
+        {locationError && (
+          <p className={styles["not-found"]}>Error: {locationError} </p>
+        )}
         {/* 
           Empty state message when no data is available or a search has not been made
         */}
-        {!data && <h3>Search for a location</h3>}
+        {/* {!data && <h3>Search for a location</h3>} */}
         {/* Display weather data if it exists */}
-        {/* {data && (
+        {selectedLocationId ? (
           <>
             <div className={styles["weather__location"]}>
               <MapPinned size={20} className={styles["icon"]} />
-              <span>{data?.name}</span>
+              {/* <span>{locationData?.name}</span> */}
             </div>
             <div className={styles["weather__info"]}>
               <img src={sunny} alt="sunny" />
-              <div className={styles["weather__type"]}>Clear</div>
+              <div className={styles["weather__type"]}>
+                {locationData?.weather?.main}
+              </div>
               <span className={styles["weather__temp"]}>
-                {Number(data?.main?.temp).toFixed(0)}&deg;
+                {Number(locationData?.main?.temp).toFixed(0)}&deg;
               </span>
             </div>
             <div className={styles["weather__date"]}>
@@ -108,20 +139,22 @@ function WeatherApp() {
                 <span className={styles["weather__data-name"]}>Wind</span>
                 <Wind className={styles["weather__data-icon"]} />
                 <span className={styles["weather__data-value"]}>
-                  {data?.wind.speed} km/h
+                  {/* {locationData?.speed} km/h */}
                 </span>
               </div>
               <div className={styles["weather__data-item"]}>
                 <span className={styles["weather__data-name"]}>Humidity</span>
                 <Droplet className={styles["weather__data-icon"]} />
                 <span className={styles["weather__data-value"]}>
-                  {data?.main.humidity}%
+                  {/* {locationData?.humidity}% */}
                 </span>
               </div>
             </div>
           </>
+        ) : (
+          <h3>Search for a location</h3>
         )}
-        ; */}
+        ;
       </div>
     </div>
   );
