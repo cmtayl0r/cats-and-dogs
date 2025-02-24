@@ -6,6 +6,10 @@ function useFetch(url) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Skip fetching if URL is falsy
+    // (e.g. if the component is unmounted or the URL is not yet set)
+    if (!url) return;
+
     // Create an AbortController instance to cancel the fetch request if needed
     const controller = new AbortController();
     const signal = controller.signal;
@@ -26,8 +30,6 @@ function useFetch(url) {
         const result = await response.json();
         // Set the fetched data to state
         setData(result);
-        // Clear any previous errors
-        setError(null);
       } catch (error) {
         // If the fetch request was cancelled, don't set an error
         // Else, set the error state

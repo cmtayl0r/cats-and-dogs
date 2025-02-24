@@ -12,6 +12,7 @@ import styles from "./WeatherApp.module.css";
 
 // Hooks
 import useFetch from "../../hooks/useFetch";
+import useDebounce from "../../hooks/useDebounce";
 
 function WeatherApp() {
   const [query, setQuery] = useState("");
@@ -65,8 +66,8 @@ function WeatherApp() {
         )}
         {/* Display any errors */}
         {error && <p className={styles["not-found"]}>Error: {error} </p>}
-        {/* Weather Info */}
-        {data && ( // Display weather data if it exists)
+        {/* Display weather data if it exists */}
+        {data && (
           <>
             <div className={styles["weather__info"]}>
               <img src={sunny} alt="sunny" />
