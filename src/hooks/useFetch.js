@@ -1,14 +1,21 @@
 import { useState, useEffect } from "react";
 
-function useFetch(url) {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+function useFetch(url, query) {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     // Skip fetching if URL is falsy
     // (e.g. if the component is unmounted or the URL is not yet set)
     if (!url) return;
+
+    // Skip fetching if query is too short or falsy
+    if (!query || query.length < 3) {
+      setData([]);
+      // setError("Please enter at least 3 characters");
+      return;
+    }
 
     // Create an AbortController instance to cancel the fetch request if needed
     const controller = new AbortController();
@@ -21,15 +28,15 @@ function useFetch(url) {
       setError(null);
 
       try {
-        const response = await fetch(url, { signal });
+        const response = await fetch(`${url}${query}`, { signal });
         if (!response.ok) {
           throw new Error(
             `Network response was not ok: ${response.statusText}`
           );
         }
         const result = await response.json();
-        // Set the fetched data to state
-        setData(result);
+        // Set the fetched data to state or null if the result is empty
+        setData(result || []);
       } catch (error) {
         // If the fetch request was cancelled, don't set an error
         // Else, set the error state
@@ -50,7 +57,7 @@ function useFetch(url) {
     return () => {
       controller.abort();
     };
-  }, [url]); // Dependency array: Effect runs whenever the URL changes
+  }, [url, query]); // Dependency array: Effect runs whenever the URL or query changes
 
   // Return an object containing the fetched data, loading status, and error message
   return { data, isLoading, error };
