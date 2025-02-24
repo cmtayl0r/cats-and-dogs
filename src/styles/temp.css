@@ -1,13 +1,81 @@
-@import url("https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap");
+/* 
+--------------------------------------------------------------------------------
+RESET & BASE
+--------------------------------------------------------------------------------
+*/
 
+:root {
+  /* Prevent font size inflation */
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+
+  /* Improve font rendering */
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: "Rethink Sans", sans-serif;
-  font-optical-sizing: auto;
 }
 
 html {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 62.5%;
+}
+
+/* 
+--------------------------------------------------------------------------------
+MAIN LAYOUT
+--------------------------------------------------------------------------------
+*/
+
+.container {
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(to right, #f3b07c, #fcd283);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* 
+--------------------------------------------------------------------------------
+WEATHER APP
+--------------------------------------------------------------------------------
+*/
+
+.weather-display {
+  width: 35rem;
+  height: 65rem;
+  background-image: linear-gradient(to top, #f3b07c, #fcd283);
+  border-radius: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  box-shadow: -3rem 1rem 6rem rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.weather-favorites {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  display: flex;
+  column-gap: 1rem;
 }

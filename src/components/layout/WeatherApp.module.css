@@ -1,26 +1,3 @@
-.container {
-  width: 100%;
-  height: 100vh;
-  background-image: linear-gradient(to right, #f3b07c, #fcd283);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-.weather-app {
-  width: 35rem;
-  height: 65rem;
-  background-image: linear-gradient(to top, #f3b07c, #fcd283);
-  border-radius: 3rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  box-shadow: -3rem 1rem 6rem rgba(0, 0, 0, 0.1);
-  position: relative;
-}
-
 /* 
 ------------------------------------------------------
 Search

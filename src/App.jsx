@@ -2,7 +2,7 @@ import WeatherApp from "./components/layout/WeatherApp";
 
 function App() {
   return (
-    <div>
+    <div className="container">
       <WeatherApp />
     </div>
   );

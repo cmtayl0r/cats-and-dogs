@@ -1,5 +1,7 @@
 import { createContext, useContext, useState } from "react";
 
+// TODO: Create state for "default" location or "pinned" location
+
 // 1. Create a context
 const GlobalContext = createContext();
 
