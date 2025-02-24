@@ -7,6 +7,9 @@ import snowy from "../../assets/images/snowy.png";
 import loadingGif from "../../assets/images/loading.gif";
 import { MapPinned, Search, Wind, Droplet } from "lucide-react";
 
+// Services
+import { API_BASE } from "../../services/apiConfig";
+
 // Local scoped styles
 import styles from "./WeatherApp.module.css";
 
@@ -19,10 +22,7 @@ function WeatherApp() {
 
   // TODO: Debounce hook for debouncedQuery
 
-  const API_KEY = "53901fa0797c3c9403358b2d02c1f9c8";
-  const { data, isLoading, error } = useFetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${query}&units=Metric&appid=${API_KEY}`
-  );
+  const { data, isLoading, error } = useFetch(`${API_BASE}&q=${query}`);
   const dateOptions = {
     weekday: "short",
     day: "numeric",
@@ -33,11 +33,6 @@ function WeatherApp() {
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
-  };
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      setQuery(e.target.value);
-    }
   };
 
   return (
@@ -55,7 +50,6 @@ function WeatherApp() {
               placeholder="Enter location ..."
               value={query}
               onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
             />
             <Search className={styles["icon"]} />
           </div>
