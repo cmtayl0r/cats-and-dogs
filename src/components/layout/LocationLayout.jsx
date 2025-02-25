@@ -12,7 +12,6 @@ import sunny from "../../assets/images/sunny.png";
 // import cloudy from "../../assets/images/cloudy.png";
 // import rainy from "../../assets/images/rainy.png";
 // import snowy from "../../assets/images/snowy.png";
-import SkeletonMainData from "../ui/skeletons/SkeletonMainData";
 
 // Services
 import { API_LOCATION_ID } from "../../services/apiConfig";
@@ -33,6 +32,7 @@ function LocationLayout() {
 
   // TODO: Add favourite location to context
   // TODO: Remove favourite location from context
+  // FIXME: Skeleton loading state design
 
   return (
     <>
@@ -41,6 +41,7 @@ function LocationLayout() {
         <div>
           <img src={loadingGif} className={styles["loading"]} alt="loading" />
           <h1>Loading</h1>
+          {/* Skeleton loading display */}
         </div>
       )}
       {/* Error */}
@@ -97,7 +98,6 @@ function LocationLayout() {
               </span>
             </div>
           </div>
-          <SkeletonMainData />
         </>
       )}
     </>
