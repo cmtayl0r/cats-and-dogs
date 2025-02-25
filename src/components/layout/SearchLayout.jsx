@@ -29,6 +29,7 @@ function SearchLayout() {
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
 
+  // TODO: Break into smaller components
   // TODO: Keyboard navigation for dropdown
   // FIXME: Dropdown not closing on click outside
   // FIXME: Clear input on click of "x" icon
@@ -69,12 +70,6 @@ function SearchLayout() {
   };
 
   // 04 - Effects
-
-  // Why use a useEffect for showSuggestions?
-  // We want to show suggestions when the query is at least 3 characters long
-  // and when the data is loading or when there are results
-  // We need to check for both query length and data state
-  //
 
   useEffect(() => {
     setShowSuggestions(
