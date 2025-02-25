@@ -1,9 +1,13 @@
-import WeatherApp from "./components/layout/WeatherApp";
+import LocationLayout from "./components/layout/LocationLayout";
+import SearchLayout from "./components/layout/SearchLayout";
 
 function App() {
   return (
     <div className="container">
-      <WeatherApp />
+      <div className="weather-display">
+        <SearchLayout />
+        <LocationLayout />
+      </div>
     </div>
   );
 }

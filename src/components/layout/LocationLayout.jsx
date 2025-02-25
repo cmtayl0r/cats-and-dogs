@@ -1,5 +1,98 @@
+// Import hooks
+import { useState, useEffect } from "react";
+import useFetch from "../../hooks/useFetch";
+
+// Context
+import { useGlobalContext } from "../../context/GlobalContext";
+
+// Import dependencies
+import { MapPinned, Wind, Droplet } from "lucide-react";
+import loadingGif from "../../assets/images/loading.gif";
+import sunny from "../../assets/images/sunny.png";
+// import cloudy from "../../assets/images/cloudy.png";
+// import rainy from "../../assets/images/rainy.png";
+// import snowy from "../../assets/images/snowy.png";
+
+// Services
+import { API_LOCATION_ID } from "../../services/apiConfig";
+
+// Local scoped styles
+import styles from "./LocationLayout.module.css";
+
 function LocationLayout() {
-  return <div></div>;
+  // 1. State from context
+  const { selectedLocation, addFavoriteLocation, removeFavoriteLocation } =
+    useGlobalContext();
+
+  const { data, isLoading, error } = useFetch(
+    API_LOCATION_ID,
+    selectedLocation
+  );
+
+  // TODO: Add favourite location to context
+  // TODO: Remove favourite location from context
+  // TODO: Turn dateOptions into a reusable function
+
+  const dateOptions = {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  };
+  const todaysDate = new Date().toLocaleDateString("en-GB", dateOptions);
+
+  return (
+    <>
+      {isLoading && (
+        <img src={loadingGif} className={styles["loading"]} alt="loading" />
+      )}
+      {error && <p className={styles["not-found"]}>Error: {error} </p>}
+
+      {!selectedLocation && <h3>Search for a location</h3>}
+      {/* Empty state message when no data is available or a search has not been made */}
+      {/* Display weather data if it exists */}
+      {selectedLocation && (
+        <>
+          <div className={styles["weather__location"]}>
+            <MapPinned size={20} className={styles["icon"]} />
+            <span>
+              {data?.name}, {data?.sys?.country}
+            </span>
+          </div>
+          <div className={styles["weather__info"]}>
+            <img src={sunny} alt="sunny" />
+            <div className={styles["weather__type"]}>
+              {data?.weather?.map((type, index) => (
+                <span key={index}>{type.description}</span>
+              ))}
+            </div>
+            <span className={styles["weather__temp"]}>
+              {Number(data?.main?.temp).toFixed(0)}&deg;
+            </span>
+          </div>
+          <div className={styles["weather__date"]}>
+            <p>{todaysDate}</p>
+          </div>
+          <div className={styles["weather__data"]}>
+            <div className={styles["weather__data-item"]}>
+              <span className={styles["weather__data-name"]}>Wind</span>
+              <Wind className={styles["weather__data-icon"]} />
+              <span className={styles["weather__data-value"]}>
+                {Number(data?.wind?.speed).toFixed(0)} km/h
+              </span>
+            </div>
+            <div className={styles["weather__data-item"]}>
+              <span className={styles["weather__data-name"]}>Humidity</span>
+              <Droplet className={styles["weather__data-icon"]} />
+              <span className={styles["weather__data-value"]}>
+                {data?.main?.humidity} %
+              </span>
+            </div>
+          </div>
+        </>
+      )}
+    </>
+  );
 }
 
 export default LocationLayout;

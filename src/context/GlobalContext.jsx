@@ -12,8 +12,8 @@ function GlobalProvider({ children }) {
   const [favoriteLocations, setFavoriteLocations] = useState([]);
 
   // 2b. Methods to update state
-  const updateSelectedLocation = (location) => {
-    setSelectedLocation(location);
+  const updateSelectedLocation = (locationId) => {
+    setSelectedLocation(locationId);
   };
 
   const clearSelectedLocation = () => {
