@@ -15,6 +15,8 @@ import sunny from "../../assets/images/sunny.png";
 
 // Services
 import { API_LOCATION_ID } from "../../services/apiConfig";
+import getTodaysDate from "../../helpers/todaysDate";
+import getTimeInTimezone from "../../helpers/timeInTimezone";
 
 // Local scoped styles
 import styles from "./LocationLayout.module.css";
@@ -23,7 +25,6 @@ function LocationLayout() {
   // 1. State from context
   const { selectedLocation, addFavoriteLocation, removeFavoriteLocation } =
     useGlobalContext();
-
   const { data, isLoading, error } = useFetch(
     API_LOCATION_ID,
     selectedLocation
@@ -31,15 +32,6 @@ function LocationLayout() {
 
   // TODO: Add favourite location to context
   // TODO: Remove favourite location from context
-  // TODO: Turn dateOptions into a reusable function
-
-  const dateOptions = {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  };
-  const todaysDate = new Date().toLocaleDateString("en-GB", dateOptions);
 
   return (
     <>
@@ -71,7 +63,9 @@ function LocationLayout() {
             </span>
           </div>
           <div className={styles["weather__date"]}>
-            <p>{todaysDate}</p>
+            <p>
+              {getTodaysDate}, {getTimeInTimezone(data?.timezone)}
+            </p>
           </div>
           <div className={styles["weather__data"]}>
             <div className={styles["weather__data-item"]}>

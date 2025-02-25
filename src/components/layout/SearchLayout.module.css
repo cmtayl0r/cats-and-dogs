@@ -28,6 +28,9 @@ Search
   font-size: 1.6rem;
   color: #484569;
 }
+.search__input input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+}
 
 .search__input input::placeholder {
   font-size: 1.4rem;
@@ -67,15 +70,19 @@ Search
 
   background-color: #fff;
   border: 2px solid red;
-
-  & > ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
+}
+.suggestions__content {
+  display: flex;
+  flex-direction: column;
 }
 
-.suggestions__item a {
+.suggestions__feedback {
+  padding: 1rem;
+  font-size: 1.6rem;
+  color: #484569;
+}
+
+a.suggestions__item {
   padding: 1rem;
   font-size: 1.6rem;
   display: block;
