@@ -12,6 +12,7 @@ import sunny from "../../assets/images/sunny.png";
 // import cloudy from "../../assets/images/cloudy.png";
 // import rainy from "../../assets/images/rainy.png";
 // import snowy from "../../assets/images/snowy.png";
+import SkeletonMainData from "../ui/skeletons/SkeletonMainData";
 
 // Services
 import { API_LOCATION_ID } from "../../services/apiConfig";
@@ -35,15 +36,23 @@ function LocationLayout() {
 
   return (
     <>
+      {/* Loading */}
       {isLoading && (
-        <img src={loadingGif} className={styles["loading"]} alt="loading" />
+        <div>
+          <img src={loadingGif} className={styles["loading"]} alt="loading" />
+          <h1>Loading</h1>
+        </div>
       )}
+      {/* Error */}
       {error && <p className={styles["not-found"]}>Error: {error} </p>}
-
-      {!selectedLocation && <h3>Search for a location</h3>}
       {/* Empty state message when no data is available or a search has not been made */}
+      {!selectedLocation && !isLoading && (
+        <div>
+          <h3>Search for a location</h3>
+        </div>
+      )}
       {/* Display weather data if it exists */}
-      {selectedLocation && (
+      {selectedLocation && !isLoading && data && (
         <>
           <div className={styles["weather__location"]}>
             <MapPinned size={20} className={styles["icon"]} />
@@ -88,6 +97,7 @@ function LocationLayout() {
               </span>
             </div>
           </div>
+          <SkeletonMainData />
         </>
       )}
     </>
