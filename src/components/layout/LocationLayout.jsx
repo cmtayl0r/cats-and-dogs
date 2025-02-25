@@ -22,7 +22,7 @@ import getTimeInTimezone from "../../helpers/timeInTimezone";
 import styles from "./LocationLayout.module.css";
 
 function LocationLayout() {
-  // 1. State from context
+  // 1. State
   const { selectedLocation, addFavoriteLocation, removeFavoriteLocation } =
     useGlobalContext();
   const { data, isLoading, error } = useFetch(
@@ -54,9 +54,10 @@ function LocationLayout() {
           <div className={styles["weather__info"]}>
             <img src={sunny} alt="sunny" />
             <div className={styles["weather__type"]}>
-              {data?.weather?.map((type, index) => (
+              {/* {data?.weather?.map((type, index) => (
                 <span key={index}>{type.description}</span>
-              ))}
+              ))} */}
+              <span>{data?.weather?.[0]?.main || "N/A"}</span>
             </div>
             <span className={styles["weather__temp"]}>
               {Number(data?.main?.temp).toFixed(0)}&deg;
@@ -64,7 +65,11 @@ function LocationLayout() {
           </div>
           <div className={styles["weather__date"]}>
             <p>
-              {getTodaysDate}, {getTimeInTimezone(data?.timezone)}
+              {data?.timezone
+                ? `${getTodaysDate(data.timezone)}, ${getTimeInTimezone(
+                    data.timezone
+                  )}`
+                : "N/A"}
             </p>
           </div>
           <div className={styles["weather__data"]}>

@@ -22,13 +22,17 @@ function SearchLayout() {
   const [query, setQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const debouncedQuery = useDebounce(query, 500);
-  const { data, isLoading, error } = useFetch(API_SEARCH, debouncedQuery);
+  const { data, isLoading, error } = useFetch(
+    API_SEARCH,
+    debouncedQuery ? debouncedQuery : null // Skip fetching if query is empty
+  );
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
 
   // TODO: Keyboard navigation for dropdown
   // FIXME: Dropdown not closing on click outside
   // FIXME: Clear input on click of "x" icon
+  //
 
   /*
     Behaviour:
@@ -91,6 +95,7 @@ function SearchLayout() {
           role="combobox"
           aria-expanded={showSuggestions}
           aria-controls="suggestions-dropdown"
+          autoFocus
         />
         {/* <Search className={styles["icon"]} /> */}
         {query && <X onClick={handleClearInput} className={styles["icon"]} />}
