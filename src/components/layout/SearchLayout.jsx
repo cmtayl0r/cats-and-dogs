@@ -32,8 +32,7 @@ function SearchLayout() {
   // TODO: Break into smaller components
   // TODO: Keyboard navigation for dropdown
   // FIXME: Dropdown not closing on click outside
-  // FIXME: Clear input on click of "x" icon
-  //
+  // TODO: Refactor hooks to use axios for calls with params
 
   /*
     Behaviour:
@@ -73,9 +72,10 @@ function SearchLayout() {
 
   useEffect(() => {
     setShowSuggestions(
-      debouncedQuery.length >= 3 && (isLoading || data?.list?.length >= 0)
+      debouncedQuery.length >= 3 &&
+        (isLoading || data?.list?.length >= 0 || error)
     );
-  }, [debouncedQuery, isLoading, data]);
+  }, [debouncedQuery, isLoading, data, error]);
 
   return (
     <div className={styles["search"]} ref={dropdownRef}>
@@ -105,6 +105,9 @@ function SearchLayout() {
           ref={dropdownRef}
         >
           <div className={styles["suggestions__content"]} aria-live="polite">
+            {error && (
+              <p className={styles["suggestions__feedback"]}>Error: {error}</p>
+            )}
             {/* 
               if loading, show loading message 
               if no results, show no results message

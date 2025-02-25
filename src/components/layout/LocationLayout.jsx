@@ -35,6 +35,7 @@ function LocationLayout() {
   // FIXME: Skeleton loading state design
   // TODO: Add background gradient based on weather type
   // FIXME: Create more efficient component for weather image
+  // TODO: Refactor hooks to use axios for calls with params
 
   const weatherImages = {
     "01d": sunny,
