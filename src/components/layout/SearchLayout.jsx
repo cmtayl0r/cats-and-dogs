@@ -56,6 +56,7 @@ function SearchLayout() {
   const handleSelectLocation = (locationId) => {
     updateSelectedLocation(locationId); // Update context with selected location
     setQuery(""); // Clear input field
+    setShowSuggestions(false); // Close dropdown
   };
 
   const handleClearInput = () => {
@@ -64,6 +65,12 @@ function SearchLayout() {
   };
 
   // 04 - Effects
+
+  // Why use a useEffect for showSuggestions?
+  // We want to show suggestions when the query is at least 3 characters long
+  // and when the data is loading or when there are results
+  // We need to check for both query length and data state
+  //
 
   useEffect(() => {
     setShowSuggestions(
@@ -90,7 +97,9 @@ function SearchLayout() {
       </div>
       {showSuggestions && (
         <div
-          className={styles["suggestions__dropdown"]}
+          className={`${styles["suggestions__dropdown"]} ${
+            showSuggestions ? styles.show : ""
+          }`}
           id="suggestions-dropdown"
           role="listbox"
           ref={dropdownRef}
