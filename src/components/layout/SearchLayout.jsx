@@ -1,3 +1,9 @@
+// TODO: Break into smaller components
+// TODO: Keyboard navigation for dropdown
+// FIXME: Dropdown not closing on click outside
+// TODO: Refactor hooks to use axios for calls with params
+// TODO: Responsive sheet view for mobile
+
 // Import hooks
 import { useState, useEffect, useRef } from "react";
 import useFetch from "../../hooks/useFetch";
@@ -28,11 +34,6 @@ function SearchLayout() {
   );
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
-
-  // TODO: Break into smaller components
-  // TODO: Keyboard navigation for dropdown
-  // FIXME: Dropdown not closing on click outside
-  // TODO: Refactor hooks to use axios for calls with params
 
   /*
     Behaviour:

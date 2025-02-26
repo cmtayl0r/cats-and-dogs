@@ -1,3 +1,11 @@
+// TODO: Break out smaller components
+// TODO: Add favourite location to context
+// TODO: Remove favourite location from context
+// FIXME: Skeleton loading state design
+// TODO: Add background gradient based on weather type
+// FIXME: Create more efficient component for weather image
+// TODO: Refactor hooks to use axios for calls with params
+
 // Import hooks
 import useFetch from "../../hooks/useFetch";
 
@@ -28,14 +36,6 @@ function LocationLayout() {
     API_LOCATION_ID,
     selectedLocation
   );
-
-  // TODO: Break out smaller components
-  // TODO: Add favourite location to context
-  // TODO: Remove favourite location from context
-  // FIXME: Skeleton loading state design
-  // TODO: Add background gradient based on weather type
-  // FIXME: Create more efficient component for weather image
-  // TODO: Refactor hooks to use axios for calls with params
 
   const weatherImages = {
     "01d": sunny,
